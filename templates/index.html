@@ -1,0 +1,142 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="top-bar">
+    <a href="/add">Add Expense</a>
+    <a href="/export">Export Excel</a>
+    <a href="/logout">Logout</a>
+</div>
+
+<hr>
+
+<h2>Dashboard</h2>
+
+<h3>Monthly Budget: ₹{{ budget }}</h3>
+
+<h3>Total Spending This Month: ₹{{ monthly_total }}</h3>
+
+<h3>Estimated Savings: ₹{{ savings }}</h3>
+
+<h3>Highest Spending Category: {{ highest_category }}</h3>
+
+<hr>
+
+<h2>Set Monthly Budget</h2>
+
+<form method="POST" action="/set_budget">
+
+    <input
+        type="number"
+        name="budget"
+        placeholder="Enter Monthly Budget"
+        required
+    >
+
+    <button type="submit">
+        Save Budget
+    </button>
+
+</form>
+
+<hr>
+
+<h2>Expenses</h2>
+
+<table>
+
+    <tr>
+        <th>Amount</th>
+        <th>Category</th>
+        <th>Description</th>
+        <th>Date</th>
+        <th>Action</th>
+    </tr>
+
+    {% for expense in expenses %}
+
+    <tr>
+
+        <td>₹{{ expense.amount }}</td>
+
+        <td>{{ expense.category }}</td>
+
+        <td>{{ expense.description }}</td>
+
+        <td>
+            {{ expense.date.strftime('%Y-%m-%d') }}
+        </td>
+
+        <td>
+            <a href="/delete/{{ expense.id }}">
+                Delete
+            </a>
+        </td>
+
+    </tr>
+
+    {% endfor %}
+
+</table>
+
+<hr>
+
+<h2>Expense Distribution</h2>
+
+<div
+    style="
+        width: 400px;
+        height: 400px;
+    "
+>
+
+    <canvas id="expenseChart"></canvas>
+
+</div>
+
+<script>
+
+    const categoryData = {{ category_data | tojson }};
+
+    const labels = Object.keys(categoryData);
+
+    const values = Object.values(categoryData);
+
+    const ctx = document
+        .getElementById('expenseChart')
+        .getContext('2d');
+
+    console.log(categoryData);
+    new Chart(ctx, {
+
+        type: 'pie',
+
+        data: {
+
+            labels: labels,
+
+            datasets: [{
+
+                label: 'Expenses',
+
+                data: values,
+
+                borderWidth: 1
+
+            }]
+
+        },
+
+        options: {
+
+            responsive: true,
+
+            maintainAspectRatio: false
+
+        }
+
+    });
+
+</script>
+
+{% endblock %}
