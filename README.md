@@ -2,114 +2,206 @@
 
 ### Track Your Expenses. Manage Your Budget. Build Better Saving Habits.
 
-\<p align="center">   \<img src="[https://img.shields.io/badge/Python-3.x-blue?logo=python](https://img.shields.io/badge/Python-3.x-blue?logo=python)" />   \<img src="[https://img.shields.io/badge/Flask-Web%20Framework-black?logo=flask](https://img.shields.io/badge/Flask-Web%20Framework-black?logo=flask)" />   \<img src="[https://img.shields.io/badge/HTML-Frontend-orange?logo=html5](https://img.shields.io/badge/HTML-Frontend-orange?logo=html5)" />   \<img src="[https://img.shields.io/badge/CSS-Styling-blue?logo=css3](https://img.shields.io/badge/CSS-Styling-blue?logo=css3)" />   \<img src="[https://img.shields.io/badge/JavaScript-Interactive-yellow?logo=javascript](https://img.shields.io/badge/JavaScript-Interactive-yellow?logo=javascript)" /> \</p>
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3.x-blue?logo=python" />
+  <img src="https://img.shields.io/badge/Flask-Web%20Framework-black?logo=flask" />
+  <img src="https://img.shields.io/badge/SQLite-Database-blue?logo=sqlite" />
+  <img src="https://img.shields.io/badge/Frontend-HTML%20%7C%20CSS%20%7C%20JavaScript-orange" />
+  <img src="https://img.shields.io/badge/Status-Project%20Completed-success" />
+</p>
 
 ## Overview
 
-Student Expense Tracker is a Flask-based web application designed to help students manage their personal finances and monitor their spending habits.
+Managing personal expenses is an important aspect of financial planning. Students often face difficulties tracking their daily expenditures, which can lead to overspending and poor budgeting.
 
-The application provides a simple way to record daily expenses, track monthly expenditure, monitor budgets and estimate potential savings.
+**Student Expense Tracker** is a Flask-based web application developed to help users record, categorize, analyze and manage their expenses efficiently.
 
-It aims to make personal financial management easier by organizing expense records and presenting useful summaries of spending patterns.
+The application uses SQLite for storing user and expense information and provides features such as expense management, category-wise filtering, monthly expenditure reports, budget tracking, savings estimation, data visualization and CSV/Excel export.
+
+The primary goal is to provide students with a simple and accessible platform for monitoring their spending habits and improving financial awareness.
 
 ## Project Objectives
 
-- Simplify personal expense management for students.
-- Maintain records of daily expenditures.
-- Monitor monthly spending patterns.
-- Track budget utilization.
-- Estimate potential savings.
-- Present financial information in an organized and understandable format.
+- Help students manage their daily expenses.
+- Provide an easy-to-use budgeting tool.
+- Maintain organized records of financial transactions.
+- Generate monthly expenditure reports.
+- Visualize spending patterns using charts.
+- Monitor budget utilization and estimate savings.
+- Improve financial awareness and encourage better spending habits.
 
 ## Features
 
-### 1. Expense Management
+### 1. User Authentication
 
-- Add new expense records.
-- Delete existing expense records.
-- Maintain an organized expense history.
+- User registration and login.
+- Password hashing for secure password storage.
+- Session-based user authentication.
+- Individual expense management.
 
-### 2. Monthly Reports
+### 2. Expense Management
 
-- View monthly expenditure summaries.
-- Monitor spending patterns over time.
-- Understand how expenses change across months.
+Users can record their expenses with the following details:
 
-### 3. Budget Tracking
+- Amount
+- Category
+- Description
+- Date
 
-- Monitor expenditure against a defined budget.
-- Keep track of remaining budget.
-- Understand monthly budget utilization.
+Available operations include:
 
-### 4. Savings Estimation
+- Add new expenses.
+- View expense history.
+- Delete existing expenses.
+- Maintain organized expense records.
 
-- Estimate potential savings based on income, budget and expenditure.
-- Observe the relationship between spending and available savings.
+### 3. Category-wise Filtering
 
-### 5. Expense Visualization
+Expenses can be organized and filtered based on categories such as:
 
-- Present financial information through visual summaries.
-- Use charts to make spending patterns easier to understand.
+- Food
+- Transport
+- Shopping
+- Hostel
+- Entertainment
+
+This helps users understand where most of their money is being spent.
+
+### 4. Monthly Reports
+
+The application provides monthly financial summaries, including:
+
+- Total monthly expenditure.
+- Highest-spending category.
+- Estimated savings.
+
+These summaries help users monitor their financial habits over time.
+
+### 5. Budget Tracking
+
+Users can set a monthly budget, and the application calculates the remaining amount based on recorded expenses.
+
+This helps users monitor their spending against their planned budget.
+
+### 6. Savings Estimation
+
+The application estimates potential savings by considering the monthly budget and total expenditure.
+
+### 7. Data Visualization
+
+Charts are generated using Chart.js to present financial information visually.
+
+The visualizations include:
+
+- Category-wise spending distribution.
+- Weekly spending trends.
+
+### 8. Data Export
+
+Users can export their expense records for external use and analysis.
+
+Supported formats:
+
+- CSV
+- Excel
 
 ## Application Workflow
 
-The following flowchart illustrates the overall working process of the application.
+The following flowchart illustrates the overall working process of the application, from user authentication to expense management and financial reporting.
 
 ```mermaid
 flowchart TD
     A(["User"]) --> B["Open Expense Tracker"]
     B --> C["Flask Application"]
-    C --> D["Dashboard"]
+    C --> D{"Authenticated?"}
 
-    D --> E{"Select Operation"}
+    D -->|No| E["Login / Signup"]
+    E --> F["Validate Credentials"]
+    F --> D
 
-    E --> F["Add Expense"]
-    E --> G["Delete Expense"]
-    E --> H["View Monthly Reports"]
-    E --> I["Track Budget"]
-    E --> J["Estimate Savings"]
+    D -->|Yes| G["Dashboard"]
 
-    F --> K["Validate Expense Details"]
-    K --> L["Update Expense Records"]
+    G --> H{"Select Operation"}
 
-    G --> L
+    H --> I["Add / Delete Expenses"]
+    H --> J["Filter by Category"]
+    H --> K["Set Monthly Budget"]
+    H --> L["View Monthly Reports"]
+    H --> M["Export CSV / Excel"]
 
-    L --> M["Update Financial Summary"]
-    H --> M
-    I --> M
-    J --> M
+    I --> N["SQLite Database"]
+    J --> N
+    K --> N
 
-    M --> N["Generate Visual Summaries"]
-    N --> O["Display Updated Dashboard"]
-    O --> P(["User Views Results"])
+    N --> O["Retrieve Financial Records"]
+    O --> P["Calculate Spending and Savings"]
+    P --> Q["Generate Charts using Chart.js"]
+    Q --> R["Display Updated Dashboard"]
 
-    P --> D
+    L --> R
+    M --> S(["Download Expense Data"])
+    R --> G
 
     classDef user fill:#172554,stroke:#60A5FA,color:#FFFFFF,stroke-width:2px
-    classDef frontend fill:#E0F2FE,stroke:#0284C7,color:#0C4A6E,stroke-width:1.5px
+    classDef process fill:#E0F2FE,stroke:#0284C7,color:#0C4A6E,stroke-width:1.5px
     classDef operation fill:#DCFCE7,stroke:#16A34A,color:#14532D,stroke-width:1.5px
-    classDef processing fill:#F3E8FF,stroke:#9333EA,color:#581C87,stroke-width:1.5px
+    classDef database fill:#F3E8FF,stroke:#9333EA,color:#581C87,stroke-width:2px
     classDef output fill:#FFEDD5,stroke:#EA580C,color:#7C2D12,stroke-width:1.5px
 
-    class A,P user
-    class B,C,D frontend
-    class E,F,G,H,I,J operation
-    class K,L,M processing
-    class N,O output
+    class A,S user
+    class B,C,E,F process
+    class G,H,I,J,K,L,M operation
+    class N,O database
+    class P,Q,R output
 ```
 
 ## Technology Stack
 
-| Category                  | Technology              |
-| ------------------------- | ----------------------- |
-| Programming Language      | Python                  |
-| Backend Framework         | Flask                   |
-| Frontend                  | HTML                    |
-| Styling                   | CSS                     |
-| Client-side Functionality | JavaScript              |
-| Data Visualization        | Chart.js                |
-| Templating Engine         | Jinja2                  |
-| Data File Included        | Excel (`expenses.xlsx`) |
+| Category | Technology |
+|---|---|
+| Programming Language | Python 3.x |
+| Backend Framework | Flask |
+| Database | SQLite |
+| ORM | Flask-SQLAlchemy |
+| Frontend | HTML |
+| Styling | CSS |
+| Client-side Functionality | JavaScript |
+| Data Visualization | Chart.js |
+| Data Processing | Pandas |
+| Excel Support | OpenPyXL |
+| Password Security | Werkzeug |
+| Templating Engine | Jinja2 |
+
+## Database Design
+
+The application uses SQLite with Flask-SQLAlchemy for database management.
+
+The database contains two primary models:
+
+### User Model
+
+Stores registered user information.
+
+| Field | Description |
+|---|---|
+| `id` | Primary key |
+| `username` | Unique username |
+| `password` | Hashed password |
+
+### Expense Model
+
+Stores individual expense records.
+
+| Field | Description |
+|---|---|
+| `id` | Primary key |
+| `amount` | Expense amount |
+| `category` | Expense category |
+| `description` | Expense description |
+| `date` | Date of transaction |
+| `user_id` | Foreign key referencing the user |
+
+Each expense record is associated with a user through the `user_id` foreign key.
 
 ## Repository Structure
 
@@ -117,14 +209,13 @@ flowchart TD
 expense-tracker/
 │
 ├── static/
-│   ├── css/
-│   ├── js/
-│   └── images/
+│   └── CSS, JavaScript and static assets
 │
 ├── templates/
 │   └── HTML templates
 │
 ├── app.py
+├── expenses.db
 ├── expenses.xlsx
 ├── .gitignore
 ├── README.md
@@ -132,7 +223,11 @@ expense-tracker/
 └── Student_Expense_Tracker_Documentation.pdf
 ```
 
-*The directory names shown inside `static/` and `templates/` are illustrative. Adjust them to match the actual files in your repository.*
+`expenses.db` is the SQLite database configured by the application. It may be generated when the database tables are initialized.
+
+`expenses.xlsx` is an accompanying Excel file included in the repository.
+
+*The static and templates directories may contain additional files and subdirectories.*
 
 ## Installation and Setup
 
@@ -147,7 +242,7 @@ cd expense-tracker
 ### 2. Create a Virtual Environment
 
 ```bash
-python -m venv venv
+python3 -m venv venv
 ```
 
 Activate the environment:
@@ -166,76 +261,145 @@ venv\Scripts\activate
 
 ### 3. Install Dependencies
 
-Install Flask and the additional packages required by the application:
+Install the required Python packages:
 
 ```bash
-pip install flask
+python -m pip install Flask Flask-SQLAlchemy pandas openpyxl
 ```
 
-If the application uses additional Python libraries, install those as well.
+Werkzeug is installed as a dependency of Flask, while `datetime` is included in Python's standard library.
 
-### 4. Run the Application
+### 4. Initialize the Database
+
+If your application initializes its tables using `DB.create_all()`, make sure that this initialization is executed within the Flask application context before using the database.
+
+For example:
+
+```python
+with app.app_context():
+    DB.create_all()
+```
+
+### 5. Run the Application
 
 ```bash
 python app.py
 ```
 
-Open the application in your browser at:
+Open the application in your browser:
 
 ```text
 http://127.0.0.1:5000/
 ```
 
+Register an account or log in to start managing expenses.
+
 ## Screenshots
 
-Add screenshots of the application here to demonstrate its interface and functionality.
+The following screenshots demonstrate the application's interface.
 
-Suggested screenshots:
+### Login and Signup
 
-| Screenshot         | Description                              |
-| ------------------ | ---------------------------------------- |
-| Dashboard          | Main application interface               |
-| Expense Management | Adding and deleting expenses             |
-| Monthly Reports    | Monthly expenditure summaries            |
-| Budget Tracking    | Budget utilization and remaining balance |
-| Savings Estimation | Estimated savings overview               |
+Add screenshots of the authentication pages here.
 
-Example Markdown for adding screenshots:
+```markdown
+![Login Page](screenshots/login.png)
+
+![Signup Page](screenshots/signup.png)
+```
+
+### Dashboard
+
+The dashboard displays the monthly budget, total spending, estimated savings and highest-spending category, along with expense records.
 
 ```markdown
 ![Dashboard](screenshots/dashboard.png)
-
-![Monthly Reports](screenshots/monthly-reports.png)
 ```
+
+### Expense Management
+
+The application allows users to add and delete expense records.
+
+```markdown
+![Expense Management](screenshots/expenses.png)
+```
+
+### Reports and Visualization
+
+Add screenshots of the monthly reports and charts here.
+
+```markdown
+![Monthly Reports](screenshots/reports.png)
+```
+
+## Results and Discussion
+
+The developed application provides the essential functionalities required for personal expense management.
+
+### Achieved Results
+
+- Storage and retrieval of expense records using SQLite.
+- User registration and login functionality.
+- Expense addition and deletion.
+- Category-based expense organization.
+- Automatic calculation of monthly expenditure.
+- Budget tracking and savings estimation.
+- Visual representation of spending patterns.
+- Export functionality for external analysis.
+
+The application simplifies financial tracking for students and provides useful insights into spending behavior. Graphical representations help users understand how their money is distributed across different categories and time periods.
+
+## Deployment Strategy
+
+The project can be deployed using cloud hosting platforms such as:
+
+- Render
+- Railway
+- PythonAnywhere
+
+General deployment steps:
+
+1. Upload the project to GitHub.
+2. Connect the repository to a hosting platform.
+3. Configure the Python environment.
+4. Install the required dependencies.
+5. Configure the database and environment variables.
+6. Deploy and test the application.
 
 ## Future Improvements
 
-- User authentication and individual expense profiles.
-- Category-based expense filtering.
-- CSV and Excel report downloads.
-- More detailed monthly and yearly analytics.
+- AI-based spending predictions.
+- More detailed financial analytics.
+- Mobile-responsive interface.
+- Cloud database integration.
 - Improved budget alerts and spending notifications.
-- Enhanced dashboard visualizations.
-- Responsive interface for mobile devices.
+- Additional visualization and reporting options.
 
 ## Learning Outcomes
 
-This project provides practical experience in:
+This project demonstrates practical experience in:
 
-- Developing web applications using Flask.
-- Connecting frontend interfaces with backend Python logic.
-- Working with HTML, CSS and JavaScript.
-- Using Jinja2 for dynamic page rendering.
-- Managing and organizing financial records.
-- Presenting data through reports and visualizations.
+- Web application development using Flask.
+- Database management using SQLite and SQLAlchemy.
+- Implementing CRUD operations.
+- User authentication and password hashing.
+- Backend and frontend integration.
+- Data visualization using Chart.js.
+- Financial data processing using Pandas.
+- Exporting structured data into CSV and Excel formats.
 
 ## Author
 
 **Priyasha Haldar**
 
+B.Sc. Computer Science  
+Visva-Bharati, Santiniketan
+
 GitHub: [ShadowCyberNinjaX](https://github.com/ShadowCyberNinjaX)
 
 ---
 
-**Project:** Student Expense Tracker
-**Category:** Web Development / Personal Finance Management
+**Project:** Student Expense Tracker  
+**Category:** Web Development / Personal Finance Management  
+**Academic Project:** Software Engineering, Semester IV  
+**Academic Year:** 2025–2026nance Management
